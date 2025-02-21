@@ -3,13 +3,13 @@ import stripe
 
 app = Flask(__name__)
 
-# Stripe API Keys (Replace with your own)
+# Stripe API Keys (Replace with your own test/live keys)
 STRIPE_PUBLIC_KEY = "pk_test_your_public_key"
 STRIPE_SECRET_KEY = "sk_test_your_secret_key"
 
 stripe.api_key = STRIPE_SECRET_KEY
 
-# Sample cart (in a real app, you'd use a database)
+# Sample cart (in a real app, you would use a database)
 cart = [
     {"name": "Speedster Longboard", "price": 799, "quantity": 1},
     {"name": "RC Racing Car", "price": 299, "quantity": 2}
@@ -17,7 +17,7 @@ cart = [
 
 @app.route("/")
 def index():
-    return render_template("checkout.html", cart=cart, public_key=STRIPE_PUBLIC_KEY)
+    return render_template("checkout.html", cart=cart)
 
 @app.route("/create-checkout-session", methods=["POST"])
 def create_checkout_session():
@@ -53,4 +53,3 @@ def cancel():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
