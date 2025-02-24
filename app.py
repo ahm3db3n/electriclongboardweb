@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, jsonify
 import stripe
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")  # Ensure Flask looks in the templates folder
 
-# Stripe API Keys (Replace with your own test/live keys)
+# Stripe API Keys (Replace with your own test keys)
 STRIPE_PUBLIC_KEY = "pk_test_your_public_key"
 STRIPE_SECRET_KEY = "sk_test_your_secret_key"
 
 stripe.api_key = STRIPE_SECRET_KEY
 
-# Sample cart (in a real app, you would use a database)
+# Sample cart (for testing)
 cart = [
     {"name": "Speedster Longboard", "price": 799, "quantity": 1},
     {"name": "RC Racing Car", "price": 299, "quantity": 2}
@@ -17,39 +17,12 @@ cart = [
 
 @app.route("/")
 def index():
-    return render_template("checkout.html", cart=cart)
+    return render_template("checkout.html", cart=cart, total_price=sum(item["price"] * item["quantity"] for item in cart), public_key=STRIPE_PUBLIC_KEY)
 
-@app.route("/create-checkout-session", methods=["POST"])
-def create_checkout_session():
-    try:
-        session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
-            line_items=[
-                {
-                    "price_data": {
-                        "currency": "usd",
-                        "product_data": {"name": item["name"]},
-                        "unit_amount": int(item["price"] * 100),  # Convert to cents
-                    },
-                    "quantity": item["quantity"],
-                }
-                for item in cart
-            ],
-            mode="payment",
-            success_url="http://127.0.0.1:5000/success",
-            cancel_url="http://127.0.0.1:5000/cancel",
-        )
-        return jsonify({"url": session.url})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
-
-@app.route("/success")
-def success():
-    return "<h1>Payment Successful! 🎉</h1>"
-
-@app.route("/cancel")
-def cancel():
-    return "<h1>Payment Cancelled! ❌</h1>"
+@app.route("/checkout")
+def checkout():
+    total_price = sum(item["price"] * item["quantity"] for item in cart)
+    return render_template("checkout.html", cart=cart, total_price=total_price, public_key=STRIPE_PUBLIC_KEY)
 
 if __name__ == "__main__":
     app.run(debug=True)
