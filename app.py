@@ -5,8 +5,8 @@ import stripe
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # 🔹 Stripe API Keys (Replace with your own test keys from Stripe Dashboard)
-STRIPE_PUBLIC_KEY = "pk_test_your_public_key"
-STRIPE_SECRET_KEY = "sk_test_your_secret_key"
+STRIPE_PUBLIC_KEY = "pk_test_51Qw2JTPGYbHY59lZ6xogTD8Vp3RKM0X88qX150uxNEMpF41xfRIcXs0D46WBmU45QQUihbYuLmuxDNneAymRGzE700aD9EfLmn"
+STRIPE_SECRET_KEY = "sk_test_51Qw2JTPGYbHY59lZmJjtc5OIKNQ4C9fsq242G47622r1VFauVsBVZ81T90MGesIZFzsK9BUXJcI5YmJnI826xpPe00cTRRuKTh"
 
 stripe.api_key = STRIPE_SECRET_KEY
 
