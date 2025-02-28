@@ -1,56 +1,31 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Welcome to ELECBOARDZ</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
-    <body>
-        <header>
-            <h1>Welcome To <br> <span class="highlight">ELECBOARDZ</span></h1>
-            <p>Hand made to ensure safety and speed, hand picked to make the price right!</p>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('shop') }}">Shop Now</a></li>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                </ul>
-            </nav>
-        </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELECBOARDZ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <h1>Welcome To <span class="highlight">ELECBOARDZ</span></h1>
+    <p>Hand made to ensure safety and speed, hand picked to make the price right!</p>
 
-        <main>
-            <section class="products">
-                <article>
-                    <h2><a href="{{ url_for('ultimate_longboard') }}">The Ultimate Electric Longboard</a></h2>
-                    <p>Top speed of 40 mph, range of 25 miles, and fast charging.</p>
-                    <a href="{{ url_for('ultimate_longboard') }}" class="btn">Buy Now - $999</a>
-                </article>
+    <nav>
+        <ul>
+            <li><a href="#">Shop Now</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="elements.html">Contact Us</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">GitHub</a></li>
+        </ul>
+    </nav>
 
-                <article>
-                    <h2><a href="{{ url_for('speedster_longboard') }}">Speedster Longboard</a></h2>
-                    <p>High torque motors, 35 mph top speed, regenerative braking.</p>
-                    <a href="{{ url_for('speedster_longboard') }}" class="btn">Buy Now - $799</a>
-                </article>
+    <h2>The Ultimate Electric Longboard</h2>
+    <p>Top speed of 40 mph, range of 25 miles, and fast charging.</p>
+    <a href="checkout">Buy Now - $999</a>
 
-                <article>
-                    <h2><a href="{{ url_for('all_terrain_longboard') }}">All-Terrain Longboard</a></h2>
-                    <p>Durable build, 30 mph speed, perfect for off-road adventures.</p>
-                    <a href="{{ url_for('all_terrain_longboard') }}" class="btn">Buy Now - $600</a>
-                </article>
-
-                <article>
-                    <h2><a href="{{ url_for('battery_pack') }}">Elecboardzzz Battery Pack</a></h2>
-                    <p>Durable strong battery pack to make your trips last a lifetime!</p>
-                    <a href="{{ url_for('battery_pack') }}" class="btn">Buy Now - $75</a>
-                </article>
-            </section>
-        </main>
-
-        <footer>
-            <p>&copy; 2025 ElecBoardz. All rights reserved.</p>
-        </footer>
-    </body>
+    <h2>Speedster Longboard</h2>
+    <p>High torque motors, 35 mph top speed, regenerative braking.</p>
+    <a href="checkout">Buy Now - $799</a>
+</body>
 </html>

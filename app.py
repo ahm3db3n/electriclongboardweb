@@ -1,24 +1,18 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, request
 import stripe
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
-# ✅ Replace these with your real Stripe API keys
-STRIPE_PUBLIC_KEY = "pk_test_51Qw2JTPGYbHY59lZ6xogTD8Vp3RKM0X88qX150uxNEMpF41xfRIcXs0D46WBmU45QQUihbYuLmuxDNneAymRGzE700aD9EfLmn"
-STRIPE_SECRET_KEY = "sk_test_51Qw2JTPGYbHY59lZmJjtc5OIKNQ4C9fsq242G47622r1VFauVsBVZ81T90MGesIZFzsK9BUXJcI5YmJnI826xpPe00cTRRuKTh"
+# 🔹 Replace with your Stripe Secret Key
+STRIPE_SECRET_KEY = "pk_test_51Qw2JTPGYbHY59lZ6xogTD8Vp3RKM0X88qX150uxNEMpF41xfRIcXs0D46WBmU45QQUihbYuLmuxDNneAymRGzE700aD9EfLmn"
+STRIPE_PUBLIC_KEY = "sk_test_51Qw2JTPGYbHY59lZmJjtc5OIKNQ4C9fsq242G47622r1VFauVsBVZ81T90MGesIZFzsK9BUXJcI5YmJnI826xpPe00cTRRuKTh"
+
 stripe.api_key = STRIPE_SECRET_KEY
 
-# 🏠 Serve the homepage
 @app.route("/")
-def index():
+def home():
     return render_template("index.html")
 
-# 🛒 Serve the cart page
-@app.route("/cart")
-def cart():
-    return render_template("cart.html")
-
-# 💳 Serve the checkout page
 @app.route("/checkout")
 def checkout():
     cart = [
@@ -26,9 +20,9 @@ def checkout():
         {"name": "RC Racing Car", "price": 299, "quantity": 2}
     ]
     total_price = sum(item["price"] * item["quantity"] for item in cart)
+    
     return render_template("checkout.html", cart=cart, total_price=total_price, public_key=STRIPE_PUBLIC_KEY)
 
-# ✅ Stripe Checkout Session
 @app.route("/create-checkout-session", methods=["POST"])
 def create_checkout_session():
     try:
@@ -36,7 +30,6 @@ def create_checkout_session():
             {"name": "Speedster Longboard", "price": 799, "quantity": 1},
             {"name": "RC Racing Car", "price": 299, "quantity": 2}
         ]
-
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[
@@ -58,6 +51,13 @@ def create_checkout_session():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# ✅ Start Flask on a specific port
+@app.route("/success")
+def success():
+    return "<h1>Payment Successful! 🎉</h1>"
+
+@app.route("/cancel")
+def cancel():
+    return "<h1>Payment Canceled ❌</h1>"
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
